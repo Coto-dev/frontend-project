@@ -1,8 +1,22 @@
 import { api } from "../api.js";
+import { searchParse } from "./parseDish.js";
 import { Router } from "./router.js";
 
-export function LoadCatalogDishes(page) {
-    fetch(`${api}/api/dish?`)
+export function LoadCatalogDishes(URLSearchParams) {
+    let url = new URL(`${api}/api/dish`);
+    let params = URLSearchParams
+    
+    if (!params){
+            params.append('categories',"Pizza");
+            params.append('categories',"Wok");
+            params.append('categories',"Soup");
+            params.append('categories',"Drink");
+            params.append('categories',"Dessert");
+    }
+    else
+    url.search = params;
+    initSelections(url)
+    fetch(url)
         .then(response => {
             if (response.ok) {
                 return response.json();
@@ -10,24 +24,69 @@ export function LoadCatalogDishes(page) {
             throw new Error("Ошибка");
         })
         .then(json => {
-            if (json.pagination.count < page) {
-                Router.dispatch(`/page = ${json.pagination.count}`);
+            if (json.pagination.count < json.pagination.page) {
+                // TODO
+               // Router.dispatch(`${url} ${json.pagination.count}`);
                 return;
             }
             json.dishes.forEach(function (dish) {
                 CreateDishCard(dish);
             });
-
-            //$('#lang').selectpicker();
-           // $('select').selectpicker();
-           // $('.selectpicker').selectpicker();
+          
           InitDishsNavigation(json);
         })
         .catch(err => {
             alert("Page not foundddd!");
-            Router.dispatch(`/`);
+           Router.dispatch(`/`);
         });
+      //  $("#confirmBtn").click(function () { confirmSearch(url) });
+
 };
+function initSelections(url){
+    console.log(url)
+    let template = $("#selecter");
+    let block = template.clone();
+    if (url.search){
+        let parse = searchParse(url.search)
+        let vegan = (parse.vegetarian === 'true');
+        let categories = parse.categories
+        let sorting = parse.sorting
+        block.find('#sortingSelect').val(sorting.toString())
+       block.find('#flexSwitchCheckDefault').prop('checked', vegan)
+       block.find('#dishSelect').val(categories.toString())
+    }
+    block.removeClass("d-none");
+    block.find("#confirmBtn").click(function () { confirmSearch(url) });
+    $("#forSelect").append(block);
+    
+}
+
+function confirmSearch(url){
+    let params = new URLSearchParams()
+   let selectDish = $('#dishSelect').val()
+   console.log(selectDish)
+   if(selectDish.length === 0){
+    alert("Page not foundddd!")
+    Router.dispatch(history.back());
+   }
+   selectDish.forEach((category)=>{
+    params.append("categories",category)
+})
+    let selectSort = $("#sortingSelect").val()
+    params.append("sorting",selectSort.toString())
+
+    let veg = ($("#flexSwitchCheckDefault").is(':checked'))
+    params.append("vegetarian",veg)
+    console.log(veg)
+  url.search = params
+  let path = url.search
+ 
+  Router.dispatch(path.toString())
+//   $('#flexSwitchCheckDefault').prop('checked', veg);
+
+  // LoadCatalogDishes(params)
+}
+
 
 function CreateDishCard(dish) {
     let template = $("#sample-card");
@@ -75,3 +134,7 @@ function InitDishsNavigation(json) {
         $("#page-item-second").parent().addClass("active");
     }
 }
+
+// let select = $("#select");
+// var value = select.options[select.selectedIndex].value;
+// console.log(value); 
