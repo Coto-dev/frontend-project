@@ -1,9 +1,9 @@
 <div class="container border rounded border-secondary mb-3" id ="forSelect">
     <!-- container select -->
 </div>
-        <div class=" d-none container row row-cols-4 mt-3 mb-3 " id="selecter">
-            <div class="col">
-            <select id="dishSelect" class="form-select" multiple >
+        <div class=" d-none container row row-cols-sm-2 row-cols-md-2  row-cols-lg-4 row-cols-xl-4  mt-3 mb-3 " id="selecter">
+            <div class="col col-lg-4 col-md-6 align-self-center">
+            <select id="dishSelect" class="selectpicker" multiple >
             <option selected value="Wok">Wok</option>
             <option value="Pizza">Pizza</option>
             <option value="Soup">Soup</option>
@@ -11,8 +11,8 @@
             <option value="Drink">Drink</option>
           </select>
           </div>
-          <div class="col align-self-center">
-          <select id="sortingSelect" class="form-select"  aria-label=" select example" >
+          <div class="col col-lg-4 col-md-6 align-self-center">
+          <select id="sortingSelect" class="selectpicker"  aria-label=" select example" >
             <option value="NameAsc">По названию</option>
             <option value="NameDesc">По названию с конца</option>
             <option value="PriceAsc">По возрастанию цены</option>
@@ -21,16 +21,16 @@
             <option value="RatingDesc">По убыванию рейтинга</option>
           </select>
           </div>
-          <div class=" form-check form-switch align-self-center">
-            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+          <div class="col col-lg-4 col-md-6 form-check form-switch align-self-center ">
+            <input class="form-check-input align-self-center" type="checkbox" id="flexSwitchCheckDefault">
             <label class="form-check-label text-white" for="flexSwitchCheckDefault">Показать только вегетарианские</label>
           </div>
-          <div class="col-2 row align-self-center ms-auto p- bd-highlight">
-            <button type="button" class="btn btn-primary" id ="confirmBtn">Подтвердить</button>
+          <div class="col col-lg-7 col-md-6 p-3 align-self-center d-lg-flex flex-row-reverse bd-highlight">
+            <button type="button" class="btn btn-primary p-2 bd-highlight" id ="confirmBtn">Подтвердить</button>
           </div>
         </div>
 
-<div class="d-none" id = "sample-card">
+<div class="d-none scale" id = "sample-card">
     <div class="col h-100">
       <div class="card card-dish-catalog h-100 ">
         <img src="" class="card-img-top dish-poster-image" alt="">
@@ -46,6 +46,7 @@
         <div class="card-footer">
           <small class="text-white dish-price"></small>
         </div>
+        <a href="#" class="stretched-link" id="link"></a>
       </div>
     </div>
 </div>
@@ -61,6 +62,8 @@
             <li class="page-item"><a class="page-link" href="/1" id="page-item-first">1</a></li>
             <li class="page-item"><a class="page-link" href="/2" id="page-item-second">2</a></li>
             <li class="page-item"><a class="page-link" href="/3" id="page-item-third">3</a></li>
+            <li class="page-item"><a class="page-link" href="/4" id="page-item-fourth">4</a></li>
+            <li class="page-item"><a class="page-link" href="/5" id="page-item-fifth">5</a></li>
             <li class="page-item">
                 <a class="page-link" href="#" aria-label="Следующая" id="page-item-next">
                     <span aria-hidden="true">&raquo;</span>

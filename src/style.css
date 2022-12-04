@@ -1,5 +1,6 @@
 body {
     background-color: #151517;
+    min-width: 320px;
 }
 
 ::-webkit-scrollbar {
@@ -24,7 +25,13 @@ body {
     background-color: #1d2023;
 }
 
+.scale {
+    transition: 0.5s;
+}
 
+.scale:hover {
+    transform: scale(1.05);
+}
 
 
 #dishes-nav-pagination>li>a {

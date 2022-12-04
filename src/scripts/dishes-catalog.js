@@ -2,19 +2,23 @@ import { api } from "../api.js";
 import { searchParse } from "./parseDish.js";
 import { Router } from "./router.js";
 
+
 export function LoadCatalogDishes(URLSearchParams) {
     let url = new URL(`${api}/api/dish`);
     let params = URLSearchParams
-    
-    if (!params){
+    console.log(URLSearchParams.toString())
+    console.log(URLSearchParams.has('categories'))
+    if (!URLSearchParams.has('categories')){
             params.append('categories',"Pizza");
             params.append('categories',"Wok");
             params.append('categories',"Soup");
             params.append('categories',"Drink");
             params.append('categories',"Dessert");
+            console.log(params.toString())
     }
     else
     url.search = params;
+    console.log(url)
     initSelections(url)
     fetch(url)
         .then(response => {
@@ -33,27 +37,30 @@ export function LoadCatalogDishes(URLSearchParams) {
                 CreateDishCard(dish);
             });
           
-          InitDishsNavigation(json);
+          InitDishsNavigation(json,url.searchParams);
         })
         .catch(err => {
             alert("Page not foundddd!");
            Router.dispatch(`/`);
         });
-      //  $("#confirmBtn").click(function () { confirmSearch(url) });
+        
 
 };
 function initSelections(url){
-    console.log(url)
+    
+    //$('#dishSelect').selectpicker();
+
     let template = $("#selecter");
     let block = template.clone();
+    block.find('.selectpicker').selectpicker();
     if (url.search){
         let parse = searchParse(url.search)
         let vegan = (parse.vegetarian === 'true');
         let categories = parse.categories
         let sorting = parse.sorting
-        block.find('#sortingSelect').val(sorting.toString())
+        block.find('#sortingSelect').selectpicker('val',sorting.toString())
        block.find('#flexSwitchCheckDefault').prop('checked', vegan)
-       block.find('#dishSelect').val(categories.toString())
+       block.find('#dishSelect').selectpicker('val',categories)
     }
     block.removeClass("d-none");
     block.find("#confirmBtn").click(function () { confirmSearch(url) });
@@ -66,7 +73,8 @@ function confirmSearch(url){
    let selectDish = $('#dishSelect').val()
    console.log(selectDish)
    if(selectDish.length === 0){
-    alert("Page not foundddd!")
+    alert("Выберите категория блюда")
+    return
     Router.dispatch(history.back());
    }
    selectDish.forEach((category)=>{
@@ -77,23 +85,27 @@ function confirmSearch(url){
 
     let veg = ($("#flexSwitchCheckDefault").is(':checked'))
     params.append("vegetarian",veg)
-    console.log(veg)
+    
   url.search = params
   let path = url.search
- 
-  Router.dispatch(path.toString())
-//   $('#flexSwitchCheckDefault').prop('checked', veg);
+  console.log(path)
+  
+    
+  //  window.location.search = path
+    console.log(window.location.pathname)
+  Router.dispatch(path)
 
-  // LoadCatalogDishes(params)
+  //SetupPage();
+
 }
 
 
 function CreateDishCard(dish) {
     let template = $("#sample-card");
     let block = template.clone();
-    block.attr("id", "dish" + dish.id);
-    block.attr("data-id", dish.id);
-    block.attr("href", "/dish/" + dish.id);
+    block.find("#link").attr("data-id", dish.id);
+    block.find("#link").attr("href", "/item/" + dish.id);
+    block.find("#link").attr("id", "dish" + dish.id);
     block.find(".dish-poster-image").attr("src", dish.image);
     block.find(".dish-name").text(dish.name);
     block.find(".dish-description").text(dish.description);
@@ -108,12 +120,15 @@ function CreateDishCard(dish) {
     block.removeClass("d-none");
     $("#dishes-catalog-container").append(block);
 }
-function InitDishsNavigation(json) {
+function InitDishsNavigation(json,search) {
+    console.log(search.toString())
     if (json.pagination.current == 1) {
-        $("#page-item-back").attr("href", "/1");
-        $("#page-item-first").attr("href", "/1").text("1");
-        $("#page-item-second").attr("href", "/2").text("2");
+        $("#page-item-back").attr("href", "/?" + search);
+        $("#page-item-first").attr("href", "/?" + search).text("1");
+        $("#page-item-second").attr("href", "/?" + search.set('page','2')).text("2");
         $("#page-item-third").attr("href", "/3").text("3");
+        $("#page-item-fourth").attr("href", "/4").text("4");
+        $("#page-item-fifth").attr("href", "/5").text("5");
         $("#page-item-next").attr("href", "/2");
         $("#page-item-first").parent().addClass("active");
     }
