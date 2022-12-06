@@ -1,25 +1,31 @@
     <main class="card container text-white" >
          <h5 class="card-title fs-1 mt-2 mx-2 ">Товары в корзине</h5>
          <div class="card-body" id ="cart-container">
-            <div class="card d-none" id ="dishCard">
-                <div class="card-body row row-cols-3">
-                    <div class="col-3">
-                            <div class="number col-2"></div>
-                            <div class="col">
-                                <img class="img-fluid rounded mx-auto d-block" id="dish-picture" alt="" />
+            <div class="card  d-none " id ="dishCard">
+                <div class="card-body container">
+                    <div class=" row row-cols-lg-2">
+                    <div class="row">
+                        <div class="col">
+                            <div class="number col"></div>
+                                <div class="col">
+                                <img class="img-fluid w-50 rounded d-block" id="dish-picture" alt="" />
+                                 </div>
+                            </div>
+                             <div class="col">
+                                <div class="name"></div>
+                                <div class="price"></div>
+                                <div class="btn-group  mt-2 w-lg-50 " role="group" aria-label="First group">
+                                   <button type="button" class="col-4 btn btn-outline-secondary" id="minus">-</button>
+                                   <input type="number" class="col-4"  id="counter" maxlength="2" min="1" readonly>
+                                   <button type="button" class="col-4 btn btn-outline-secondary" id="plus">+</button>
+                                 </div>
                              </div>
-                    </div>
-                        <div class="col-2 mt-4">
-                         <div class="name"></div>
-                         <div class="price"></div>
                         </div>
-                    <div class="btn-group col-2 h-25 " role="group" aria-label="First group">
-                        <button type="button" class="col-4 btn btn-outline-secondary" id="minus">-</button>
-                        <input type="number" class="col-4"  id="counter" maxlength="2" min="1" readonly>
-                        <button type="button" class="col-4 btn btn-outline-secondary" id="plus">+</button>
-                      </div>
-                      <div class="col-5 d-flex justify-content-end h-25">
+                      <div class="col d-flex justify-content-end mt-5">
+                      <div class="  ">
                       <button type="button" class="btn btn-outline-danger" id="delete">Удалить</button>
+                    </div>
+                    </div>
                     </div>
                 </div>
             </div>

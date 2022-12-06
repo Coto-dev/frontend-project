@@ -33,6 +33,7 @@
 <div class="d-none scale" id = "sample-card">
     <div class="col h-100">
       <div class="card card-dish-catalog h-100 ">
+        <a href="#" class="stretched-link" id="link"></a>
         <img src="" class="card-img-top dish-poster-image" alt="">
           <div class="card-img-overlay">
            <img src="" class="col-2 vegan" alt="">
@@ -43,10 +44,23 @@
               <input  class="rating " value="1.5" data-min="0" data-max="10" data-step="1" data-readonly="true">
           <div class="dish-description"></div>
         </div>
-        <div class="card-footer">
+      
+        <div class="card-footer container-fluid">
+          <div class="row">
+          <div class="col">
           <small class="text-white dish-price"></small>
-        </div>
-        <a href="#" class="stretched-link" id="link"></a>
+         </div>  
+          <div class="col d-flex flex-row-reverse bd-highlight" id="confirm">
+            <button type="button" class="btn btn-primary" id ="confirmBtn">Купить</button>
+          </div>
+          <div class="btn-group col h-25 d-none" role="group" aria-label="First group" id="groupbtn">
+            <button type="button" class="col-4 btn btn-outline-secondary" id="minus">-</button>
+            <input type="number" class="col-4"  id="counter" maxlength="2" min="1" readonly>
+            <button type="button" class="col-4 btn btn-outline-secondary" id="plus">+</button>
+          </div>
+          </div>
+       </div>
+        <!-- <a href="#" class="stretched-link" id="link"></a> -->
       </div>
     </div>
 </div>
@@ -59,11 +73,13 @@
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
-            <li class="page-item"><a class="page-link" href="/1" id="page-item-first">1</a></li>
-            <li class="page-item"><a class="page-link" href="/2" id="page-item-second">2</a></li>
-            <li class="page-item"><a class="page-link" href="/3" id="page-item-third">3</a></li>
-            <li class="page-item"><a class="page-link" href="/4" id="page-item-fourth">4</a></li>
-            <li class="page-item"><a class="page-link" href="/5" id="page-item-fifth">5</a></li>
+            <li class="page-item d-none"><a class="page-link" href="/1" id="1">1</a></li>
+            <li class="page-item d-none"><a class="page-link" href="/2" id="2">2</a></li>
+            <li class="page-item d-none"><a class="page-link" href="/3" id="3">3</a></li>
+            <li class="page-item d-none"><a class="page-link" href="/4" id="4">4</a></li>
+            <li class="page-item d-none"><a class="page-link" href="/5" id="5">5</a></li>
+            <li class="page-item d-none"><a class="page-link" href="/6" id="6">5</a></li>
+
             <li class="page-item">
                 <a class="page-link" href="#" aria-label="Следующая" id="page-item-next">
                     <span aria-hidden="true">&raquo;</span>

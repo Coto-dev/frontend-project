@@ -1,8 +1,8 @@
 import { api } from "../api.js";
 import { Router } from "./router.js";
 
-export function loadCartDishes(){
-    fetch(`${api}/api/basket`, {
+export async function loadCartDishes(){
+   await fetch(`${api}/api/basket`, {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
@@ -10,31 +10,35 @@ export function loadCartDishes(){
             'Authorization': `Bearer ${localStorage.getItem("JWT")}`
                  },
          })
-         .then(response => {
+         .then(response => { 
             if (!response.ok) {
             const user = JSON.parse(localStorage.getItem("user"));
             if (user.auth == false)
-            Router.dispatch(`/login/`);
+            Router.dispatch(`/login/`)
             }
            return response.json(); 
         })
-        .then(json => {var counter = 0; json.forEach(function (dish) {
+        .then(json => {var counter = 0;
+            if(!json.length) $("#cart-container").append($("#error").removeClass("d-none")) 
+    
+             json.forEach(function (dish) {
             counter++;
             createDishCart(dish,counter);
+            console.log(json)
             });          
         })
         .catch(err => {
             $("#cart-container").append($("#error").removeClass("d-none"))  
-
+            console.log(err)
              });
-             console.log('cart '+window.location.pathname)
+            
 }
 export function createDishCart(dish,counter){
+    console.log(dish)
     if(!dish){
         $("#cart-container").append($("#error").removeClass("d-none"))
         return
     }
-    console.log(dish)
     let template = $("#dishCard");
     let block = template.clone();
     block.find("#dish-picture").attr("src", dish.image);
@@ -56,7 +60,8 @@ export function createDishCart(dish,counter){
     $("#cart-container").append(block);
 
 }
-export function decreaseAmount(id , increase){
+ export async function decreaseAmount(id , increase){
+    
     fetch(`${api}/api/basket/dish/${id}?increase=${increase}`, {
         method: 'DELETE',
         headers: {
@@ -65,14 +70,27 @@ export function decreaseAmount(id , increase){
             'Authorization': `Bearer ${localStorage.getItem("JWT")}`
                  }
                 })
-                .then(response => location.reload())
+                .then(response =>  {
+                    if (response.ok && increase == true && $("#"+id).val()>1){
+                        let count = $("#"+id).val()
+                        console.log($("#"+id).val())
+                        $("#"+id).val(parseInt(count) - 1)
+                        console.log( $("#"+id).val())
+                    }
+                    else location.reload()
+                    
+                })
                 .catch(err => {
-                    alert("Ошибка при добавлении отзыва");
+                    alert("Ошибка при удалении блюда");
                 });
 }
-export function increaseAmount(id){
-//   let count = $("#"+id).val()
-//   $("#"+id).val(parseInt(count) + 1)
+export async function increaseAmount(id){
+  
+const user = JSON.parse(localStorage.getItem("user"));
+            if (user.auth == false){
+           Router.dispatch(`/login/`);
+           return;
+            }
     fetch(`${api}/api/basket/dish/${id}`, {
         method: 'POST',
         headers: {
@@ -81,8 +99,13 @@ export function increaseAmount(id){
             'Authorization': `Bearer ${localStorage.getItem("JWT")}`
                  }
                 })
-                .then(response => location.reload())
+                 .then(response => {
+                    if(response.ok){
+                        let count = $("#"+id).val()
+                        $("#"+id).val(parseInt(count) + 1)
+                    }
+                 })
                 .catch(err => {
-                    alert("Ошибка при добавлении отзыва");
+                   // alert("Ошибка при добавлении блюда" +err);
                 });  
 }

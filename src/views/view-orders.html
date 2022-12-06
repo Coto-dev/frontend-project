@@ -1,0 +1,43 @@
+<main class="card container text-white" >
+    <div class="container  mt-2 border border-secondary">
+        <div class="row">
+        <div class="col-6">
+            <p class="text-start fs-5 pt-2">В корзине есть блюда, можно оформить заказ</p>
+         </div>
+         <div class="mt-2 col-6 d-flex justify-content-end h-75">
+            <button type="button" class="btn btn-outline-success" id="createorder">Оформить</button>
+         </div>
+        </div>
+    </div>
+    <h5 class="card-title fs-1 mt-2 mx-2 ">Последние заказы</h5>
+    <div class="card-body" id ="orders-container">
+        <!-- d-none -->
+       <div class="card d-none" id ="orderCard"> 
+           <div class="card-body row">
+               <div class="col-6 ">
+                       <div class=" col">
+                        <!-- <p class="text-start fs-5 pt-2">заказ от</p> -->
+                        <a href="#" class="text-reset fs-5" id="link">Заказ от 2002.01.01</a>
+                       </div>
+                       <div class="col">
+                        <div class=" fs-5" id="status">статус</div>
+                        </div>
+                        <div class="col">
+                            <div class=" fs-5" id="deliv">доставлен</div>
+                        </div>
+               </div>
+                   <div class="col">
+                    <div class="mt-2 d-flex justify-content-end">
+                        <button type="button" class="btn btn-outline-success d-none" id="confirm">Подтвердить доставку</button>
+                     </div>
+                    <div class="price text-end mt-3 fs-5 ">
+                        <p class="">Стоимость заказа</p>
+                    </div>
+                   </div>
+           </div>
+       </div>
+    </div>
+</main>
+<div class="alert alert-dark d-none text-center" role="alert" id="error">
+<h4 class="alert-heading">Заказов нет</h4>
+</div>

@@ -1,23 +1,14 @@
 import { api } from "../api.js";
+import { decreaseAmount, increaseAmount } from "./cart.js";
 import { searchParse } from "./parseDish.js";
 import { Router } from "./router.js";
 
 
-export function LoadCatalogDishes(URLSearchParams) {
+export async function LoadCatalogDishes(URLSearchParametrs) {
     let url = new URL(`${api}/api/dish`);
-    let params = URLSearchParams
-    console.log(URLSearchParams.toString())
-    console.log(URLSearchParams.has('categories'))
-    if (!URLSearchParams.has('categories')){
-            params.append('categories',"Pizza");
-            params.append('categories',"Wok");
-            params.append('categories',"Soup");
-            params.append('categories',"Drink");
-            params.append('categories',"Dessert");
-            console.log(params.toString())
-    }
-    else
-    url.search = params;
+    let params = URLSearchParametrs
+    
+     url.search = URLSearchParametrs;
     console.log(url)
     initSelections(url)
     fetch(url)
@@ -29,43 +20,75 @@ export function LoadCatalogDishes(URLSearchParams) {
         })
         .then(json => {
             if (json.pagination.count < json.pagination.page) {
-                // TODO
-               // Router.dispatch(`${url} ${json.pagination.count}`);
+                
                 return;
             }
             json.dishes.forEach(function (dish) {
                 CreateDishCard(dish);
             });
           
-          InitDishsNavigation(json,url.searchParams);
+          InitDishsNavigation(json);
         })
         .catch(err => {
-            alert("Page not foundddd!");
-           Router.dispatch(`/`);
+            alert("Page not found!" + err);
+         //  Router.dispatch(`/`);
         });
-        
-
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (user.auth == true)
+       await initFooterBtn()
 };
+async function initFooterBtn(){
+    fetch(`${api}/api/basket`, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem("JWT")}`
+                 },
+         })
+         .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error("Ошибка");
+        })
+        .then(json => { json.forEach(function (dishCart) {
+            $("#footerid-"+dishCart.id).find("#groupbtn").removeClass('d-none')
+            $("#footerid-"+dishCart.id).find("#"+dishCart.id).val(dishCart.amount)
+            $("#footerid-"+dishCart.id).find("#minus").on('click', async function(){
+                console.log(($("#"+dishCart.id)).val())
+              await decreaseAmount(dishCart.id,true)
+              console.log(($("#"+dishCart.id)).val())
+            })
+            $("#footerid-"+dishCart.id).find("#plus").on('click',async function(){
+               await increaseAmount(dishCart.id)
+            })
+            $("#footerid-"+dishCart.id).find("#confirm").addClass('d-none')
+            });          
+        })
+        .catch(err => {
+           alert('page not found'+err) 
+
+             });
+             
+}
 function initSelections(url){
     
-    //$('#dishSelect').selectpicker();
-
     let template = $("#selecter");
     let block = template.clone();
     block.find('.selectpicker').selectpicker();
-    if (url.search){
-        let parse = searchParse(url.search)
-        let vegan = (parse.vegetarian === 'true');
-        let categories = parse.categories
-        let sorting = parse.sorting
-        block.find('#sortingSelect').selectpicker('val',sorting.toString())
-       block.find('#flexSwitchCheckDefault').prop('checked', vegan)
-       block.find('#dishSelect').selectpicker('val',categories)
-    }
+    console.log(url.searchParams.getAll('categories'))
+    let categories = url.searchParams.getAll('categories')
+    console.log(categories)
+    let sorting = url.searchParams.get('sorting')
+    let vegan = (url.searchParams.get('vegetarian') === 'true')
+    if (categories) block.find('#dishSelect').selectpicker('val',categories)
+    if (sorting) block.find('#sortingSelect').selectpicker('val',sorting.toString())
+    if (vegan)  block.find('#flexSwitchCheckDefault').prop('checked', vegan)
+
     block.removeClass("d-none");
     block.find("#confirmBtn").click(function () { confirmSearch(url) });
     $("#forSelect").append(block);
-    
 }
 
 function confirmSearch(url){
@@ -88,14 +111,11 @@ function confirmSearch(url){
     
   url.search = params
   let path = url.search
-  console.log(path)
-  
-    
-  //  window.location.search = path
-    console.log(window.location.pathname)
+//   console.log(path)
+//   console.log(url)
+//   console.log(window.location.pathname + window.location.search)
   Router.dispatch(path)
 
-  //SetupPage();
 
 }
 
@@ -105,7 +125,7 @@ function CreateDishCard(dish) {
     let block = template.clone();
     block.find("#link").attr("data-id", dish.id);
     block.find("#link").attr("href", "/item/" + dish.id);
-    block.find("#link").attr("id", "dish" + dish.id);
+    block.find(".card-footer").attr("id","footerid-" +dish.id);
     block.find(".dish-poster-image").attr("src", dish.image);
     block.find(".dish-name").text(dish.name);
     block.find(".dish-description").text(dish.description);
@@ -116,40 +136,61 @@ function CreateDishCard(dish) {
     block.find(".rating").rating('update', dish.rating);
 
     block.find(".dish-category").text("Категория блюда - " + dish.category);
-    block.find(".dish-price").text("Цена - " + dish.price + "р");;
+    block.find(".dish-price").text("Цена - " + dish.price + "р");
+    block.find("#confirmBtn").on('click', async function(){
+       await increaseAmount(dish.id)
+       location.reload()
+    })
+    // block.find("#confirmBtn").on('click', function(){
+    //     increaseAmount(dish.id)
+    //     block.find("#confirm").addClass('d-none')
+    //     block.find("#groupbtn").find("#"+dish.id).val(0)
+
+    //     $("#footerid-"+dish.id).find("#minus").on('click', function(){
+    //         console.log($("#"+dish.id).val())
+    //         block.find("#"+dish.id).val()
+    //         decreaseAmount(dish.id,true)
+    //         if (block.find("#"+dish.id).val()<=1)
+    //         {
+    //             console.log(block.find("#"+dish.id).val())
+    //             block.find("#groupbtn").addClass('d-none')
+    //             block.find("#confirm").removeClass('d-none')
+    //         }
+    //      })
+    //      $("#footerid-"+dish.id).find("#plus").on('click', function(){
+    //          increaseAmount(dish.id)
+    //      })
+
+    //     block.find("#groupbtn").removeClass('d-none')
+        
+    // })
+    block.find("#counter").attr("id", dish.id);
     block.removeClass("d-none");
     $("#dishes-catalog-container").append(block);
 }
-function InitDishsNavigation(json,search) {
+function InitDishsNavigation(json) {
+    var search = new URLSearchParams(window.location.search)
     console.log(search.toString())
-    if (json.pagination.current == 1) {
-        $("#page-item-back").attr("href", "/?" + search);
-        $("#page-item-first").attr("href", "/?" + search).text("1");
-        $("#page-item-second").attr("href", "/?" + search.set('page','2')).text("2");
-        $("#page-item-third").attr("href", "/3").text("3");
-        $("#page-item-fourth").attr("href", "/4").text("4");
-        $("#page-item-fifth").attr("href", "/5").text("5");
-        $("#page-item-next").attr("href", "/2");
-        $("#page-item-first").parent().addClass("active");
+    console.log(json.pagination)
+    for (let i=1;i<=json.pagination.count;i++){
+        if (i==json.pagination.current) {
+         $("#"+i.toString()).parent().addClass("active")
+        }
+        search.set('page', i.toString())
+        $("#"+i.toString()).attr("href", "/?" + search)
+         $("#"+i.toString()).parent().removeClass("d-none")
+        console.log("#"+i);
     }
-    else if (json.pagination.current == json.pagination.count) {
-        $("#page-item-back").attr("href", `/${json.pagination.current - 1}`);
-        $("#page-item-first").attr("href", `/${json.pagination.current - 2}`).text(json.pagination.current - 2);
-        $("#page-item-second").attr("href", `/${json.pagination.current - 1}`).text(json.pagination.current - 1);
-        $("#page-item-third").attr("href", `/${json.pagination.current}`).text(json.pagination.current);
-        $("#page-item-next").attr("href", `/${json.pagination.current}`);
-        $("#page-item-third").parent().addClass("active");
-    }
-    else {
-        $("#page-item-back").attr("href", `/${json.pagination.current - 1}`);
-        $("#page-item-first").attr("href", `/${json.pagination.current - 1}`).text(json.pagination.current - 1);
-        $("#page-item-second").attr("href", `/${json.pagination.current}`).text(json.pagination.current);
-        $("#page-item-third").attr("href", `/${json.pagination.current + 1}`).text(json.pagination.current + 1);
-        $("#page-item-next").attr("href", `/${json.pagination.current + 1}`);
-        $("#page-item-second").parent().addClass("active");
-    }
+        if (json.pagination.current == json.pagination.count)
+        search.set('page', json.pagination.current.toString())
+        else  search.set('page', (json.pagination.current +1).toString())
+        $("#page-item-next").attr("href", "/?" + search)
+
+        if (json.pagination.current == 1)
+        search.set('page', json.pagination.current.toString())
+        else  search.set('page', (json.pagination.current -1).toString())
+        $("#page-item-back").attr("href", "/?" + search)
+        
 }
 
-// let select = $("#select");
-// var value = select.options[select.selectedIndex].value;
-// console.log(value); 
+ 

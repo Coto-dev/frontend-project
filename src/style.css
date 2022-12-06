@@ -58,3 +58,6 @@ body {
 #dishes-nav-pagination>.active>a:hover {
     border: solid 1px #4c535b !Important;
 }
+.card-footer  {
+    z-index: 1;
+}
