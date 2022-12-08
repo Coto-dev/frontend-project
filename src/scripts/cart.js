@@ -62,7 +62,7 @@ export function createDishCart(dish,counter){
 }
  export async function decreaseAmount(id , increase){
     
-    fetch(`${api}/api/basket/dish/${id}?increase=${increase}`, {
+   await fetch(`${api}/api/basket/dish/${id}?increase=${increase}`, {
         method: 'DELETE',
         headers: {
             'Accept': 'application/json',
@@ -91,7 +91,7 @@ const user = JSON.parse(localStorage.getItem("user"));
            Router.dispatch(`/login/`);
            return;
             }
-    fetch(`${api}/api/basket/dish/${id}`, {
+   await fetch(`${api}/api/basket/dish/${id}`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',

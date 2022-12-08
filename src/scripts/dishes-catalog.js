@@ -16,29 +16,34 @@ export async function LoadCatalogDishes(URLSearchParametrs) {
             if (response.ok) {
                 return response.json();
             }
-            throw new Error("Ошибка");
+            else{
+               $("#error").removeClass("d-none")
+               return
+            }
+          
         })
         .then(json => {
             if (json.pagination.count < json.pagination.page) {
-                
+                $("#error").removeClass("d-none")
                 return;
             }
-            json.dishes.forEach(function (dish) {
+            json.dishes.forEach( function (dish) {
                 CreateDishCard(dish);
             });
-          
+            if (user.auth == true)
+          initFooterBtn()
           InitDishsNavigation(json);
         })
         .catch(err => {
-            alert("Page not found!" + err);
+            $("#error").removeClass("d-none")
          //  Router.dispatch(`/`);
         });
         const user = JSON.parse(localStorage.getItem("user"));
-        if (user.auth == true)
-       await initFooterBtn()
+        
+        
 };
 async function initFooterBtn(){
-    fetch(`${api}/api/basket`, {
+  await fetch(`${api}/api/basket`, {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
@@ -50,7 +55,10 @@ async function initFooterBtn(){
             if (response.ok) {
                 return response.json();
             }
-            throw new Error("Ошибка");
+            else{ 
+               $("#error").removeClass("d-none")
+                return
+            }
         })
         .then(json => { json.forEach(function (dishCart) {
             $("#footerid-"+dishCart.id).find("#groupbtn").removeClass('d-none')
@@ -120,7 +128,7 @@ function confirmSearch(url){
 }
 
 
-function CreateDishCard(dish) {
+ function CreateDishCard(dish) {
     let template = $("#sample-card");
     let block = template.clone();
     block.find("#link").attr("data-id", dish.id);
@@ -141,29 +149,7 @@ function CreateDishCard(dish) {
        await increaseAmount(dish.id)
        location.reload()
     })
-    // block.find("#confirmBtn").on('click', function(){
-    //     increaseAmount(dish.id)
-    //     block.find("#confirm").addClass('d-none')
-    //     block.find("#groupbtn").find("#"+dish.id).val(0)
-
-    //     $("#footerid-"+dish.id).find("#minus").on('click', function(){
-    //         console.log($("#"+dish.id).val())
-    //         block.find("#"+dish.id).val()
-    //         decreaseAmount(dish.id,true)
-    //         if (block.find("#"+dish.id).val()<=1)
-    //         {
-    //             console.log(block.find("#"+dish.id).val())
-    //             block.find("#groupbtn").addClass('d-none')
-    //             block.find("#confirm").removeClass('d-none')
-    //         }
-    //      })
-    //      $("#footerid-"+dish.id).find("#plus").on('click', function(){
-    //          increaseAmount(dish.id)
-    //      })
-
-    //     block.find("#groupbtn").removeClass('d-none')
-        
-    // })
+   
     block.find("#counter").attr("id", dish.id);
     block.removeClass("d-none");
     $("#dishes-catalog-container").append(block);
@@ -181,6 +167,8 @@ function InitDishsNavigation(json) {
          $("#"+i.toString()).parent().removeClass("d-none")
         console.log("#"+i);
     }
+        $("#page-item-next").parent().removeClass('d-none')
+        $("#page-item-back").parent().removeClass('d-none')
         if (json.pagination.current == json.pagination.count)
         search.set('page', json.pagination.current.toString())
         else  search.set('page', (json.pagination.current +1).toString())

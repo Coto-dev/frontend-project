@@ -61,3 +61,17 @@ body {
 .card-footer  {
     z-index: 1;
 }
+.badge  {
+    z-index: 1;
+}
+@media (min-width: 992px) {
+    .w-lg-10 { width: 10%!important; }
+    .w-lg-15 { width: 15%!important; }
+    .w-lg-25 { width: 25%!important; }
+    .w-lg-50 { width: 50%!important; }
+}
+@media (min-width: 768px) {
+    .w-md-10 { width: 10%!important; }
+    .w-md-15 { width: 15%!important; }
+    .w-md-50 { width: 50%!important; }
+}

@@ -2,7 +2,7 @@
     <!-- container select -->
 </div>
         <div class=" d-none container row row-cols-sm-2 row-cols-md-2  row-cols-lg-4 row-cols-xl-4  mt-3 mb-3 " id="selecter">
-            <div class="col col-lg-4 col-md-6 align-self-center">
+            <div class="col col-lg-4 col-md-6 my-1 align-self-center">
             <select id="dishSelect" class="selectpicker" multiple >
             <option selected value="Wok">Wok</option>
             <option value="Pizza">Pizza</option>
@@ -11,7 +11,7 @@
             <option value="Drink">Drink</option>
           </select>
           </div>
-          <div class="col col-lg-4 col-md-6 align-self-center">
+          <div class="col col-lg-4 col-md-6 my-1 align-self-center">
           <select id="sortingSelect" class="selectpicker"  aria-label=" select example" >
             <option value="NameAsc">По названию</option>
             <option value="NameDesc">По названию с конца</option>
@@ -21,7 +21,7 @@
             <option value="RatingDesc">По убыванию рейтинга</option>
           </select>
           </div>
-          <div class="col col-lg-4 col-md-6 form-check form-switch align-self-center ">
+          <div class="col col-lg-4 my-1 col-md-6 form-check form-switch align-self-center ">
             <input class="form-check-input align-self-center" type="checkbox" id="flexSwitchCheckDefault">
             <label class="form-check-label text-white" for="flexSwitchCheckDefault">Показать только вегетарианские</label>
           </div>
@@ -66,9 +66,9 @@
 </div>
 
     <main class="container-fluid row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4"  id="dishes-catalog-container"></main>
-    <nav class="container d-flex justify-content-center pt-2" id="dishes-nav-container">
+    <nav class="container d-flex justify-content-center pt-2 mt-5" id="dishes-nav-container">
         <ul class="pagination pagination-dark" id="dishes-nav-pagination">
-            <li class="page-item">
+            <li class="page-item d-none">
                 <a class="page-link" href="" aria-label="Предыдущая" id="page-item-back">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
@@ -80,11 +80,14 @@
             <li class="page-item d-none"><a class="page-link" href="/5" id="5">5</a></li>
             <li class="page-item d-none"><a class="page-link" href="/6" id="6">5</a></li>
 
-            <li class="page-item">
+            <li class="page-item d-none">
                 <a class="page-link" href="#" aria-label="Следующая" id="page-item-next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
         </ul>
     </nav>
-   
+
+    <div class="container alert alert-dark d-none text-center" role="alert" id="error">
+      <h4 class="alert-heading">Скоро будет в наличии</h4>
+      </div>

@@ -1,6 +1,7 @@
 import { Logout } from "./logout.js";
+import { api } from "../api.js";
 
-export function SetupNavbar() {
+export async function SetupNavbar() {
     const user = JSON.parse(localStorage.getItem("user"));
 
     if (user.auth == true) {
@@ -8,6 +9,8 @@ export function SetupNavbar() {
         $(".nav-item-not-auth").addClass("d-none");
         $("#nameUser").text(user.userData.email);
         $("#btnLogout").click(function () { Logout() });
+        await bangeCount()
+        
     }
     else {
         $(".nav-item-auth").addClass("d-none");
@@ -40,4 +43,29 @@ export function SetupHighlightingActivePage(key) {
         $("#navBasket").removeClass("active");
         $("#navProfile").removeClass("active");
     }
+}
+
+export async function bangeCount(){
+    await fetch(`${api}/api/basket`, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem("JWT")}`
+                 },
+         })
+         .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error("Ошибка");
+        })
+        .then(json => { 
+            $("#count").removeClass("d-none");
+            $("#count").text(json.length)
+        })
+        .catch(err => {
+           alert('page not found'+err) 
+
+             });
 }
