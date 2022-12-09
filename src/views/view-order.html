@@ -1,0 +1,60 @@
+<main class="card container text-white" >
+    <div class="container card-footer mt-2 ">
+        <div class="row ">
+        <div class="col-12 col-sm-6">
+            <div class="text-start fs-2" id="cartCheck">Заказ</div>
+         </div>
+         <div class="col-12  col-sm-6 mt-1 d-sm-flex justify-content-end h-75 d-none">
+            <button type="button" class="btn btn-outline-success" id="confirm">Подтвердить доставку</button>
+         </div>
+        </div>
+    </div>
+    <div class="card-title fs-1 mt-2 mx-2 ">
+        <div class=" col">
+            <div class="fs-5" id="orderTime">Дата заказа</div>
+           </div>
+           <div class="col">
+            <div class=" fs-5" id="deliveryTime">Дата доставки</div>
+            </div>
+            <div class="col">
+                <div class=" fs-5" id="address">Адрес</div>
+            </div>
+            <div class="col">
+                <div class=" fs-5" id="status">Статус</div>
+            </div>
+    </div>
+    <div class="card-body" id ="orders-container">
+        <p class="fs-5">Список блюд:</p>
+       <div class="card d-none" id ="orderCard"> 
+           <div class="card-body row">
+            <div class="col-12 col-md-6 col-lg-2">
+                <img class="img-fluid rounded d-block" id="dish-picture" alt="" />
+             </div>
+               <div class="col-12 col-md-6 col-lg-7">
+                       <div class=" col fs-4">
+                            <div class="fw-bold" id="name">Том ям</div>
+                       </div>
+                       <div class="col">
+                        <div class=" fs-5" id="price">цена</div>
+                        </div>
+                        <div class="col">
+                            <div class=" fs-5" id="amount">Колиечество</div>
+                        </div>
+               </div>
+                   <div class="col-12 col-md-4 col-lg-3 mb-2 mt-auto">
+                    <div class=" text-end mt-3 fs-5 " id="totalPrice">
+                        <p class="">Стоимость заказа</p>
+                    </div>
+                   </div>
+           </div>
+       </div>
+    </div>
+  
+    <div class="mb-2 text-start mt-3 fs-5 " id="summary">
+          <p class="">Стоимость заказа</p>
+      </div>
+         
+</main>
+<div class="alert alert-dark d-none text-center" role="alert" id="error">
+<h4 class="alert-heading">Что-то пошло не так</h4>
+</div>

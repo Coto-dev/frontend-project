@@ -1,10 +1,10 @@
 <main class="card container text-white" >
     <div class="container  mt-2 border border-secondary">
         <div class="row">
-        <div class="col-6">
-            <p class="text-start fs-5 pt-2">В корзине есть блюда, можно оформить заказ</p>
+        <div class="col-sm-8 col-lg-6">
+            <p class="text-start fs-5 pt-2" id="cartCheck">В корзине есть блюда, можно оформить заказ</p>
          </div>
-         <div class="mt-2 col-6 d-flex justify-content-end h-75">
+         <div class="col-sm-4 mt-2 mb-2 col-lg-6 align-items-center  d-sm-flex justify-content-end h-75">
             <button type="button" class="btn btn-outline-success" id="createorder">Оформить</button>
          </div>
         </div>
@@ -14,9 +14,8 @@
         <!-- d-none -->
        <div class="card d-none" id ="orderCard"> 
            <div class="card-body row">
-               <div class="col-6 ">
+               <div class="col-12 col-md-6 col-lg-6 ">
                        <div class=" col">
-                        <!-- <p class="text-start fs-5 pt-2">заказ от</p> -->
                         <a href="#" class="text-reset fs-5" id="link">Заказ от 2002.01.01</a>
                        </div>
                        <div class="col">
@@ -26,11 +25,11 @@
                             <div class=" fs-5" id="deliv">доставлен</div>
                         </div>
                </div>
-                   <div class="col">
-                    <div class="mt-2 d-flex justify-content-end">
+                   <div class="col-12 col-md-6 col-lg">
+                    <div class="mt-2 d-lg-flex justify-content-end">
                         <button type="button" class="btn btn-outline-success d-none" id="confirm">Подтвердить доставку</button>
                      </div>
-                    <div class="price text-end mt-3 fs-5 ">
+                    <div class="price text-lg-end mt-3 fs-5 ">
                         <p class="">Стоимость заказа</p>
                     </div>
                    </div>

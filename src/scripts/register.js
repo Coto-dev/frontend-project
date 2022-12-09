@@ -48,49 +48,65 @@ function PostRequestRegister(userData) {
 }
 
 function CheckValidationData(userData) {
+let checkIscomplete = true
 
     if (userData.fullName == "") {
-        alert("Введите логин");
-        return false;
+        $("#inputName").addClass('is-invalid')
+        checkIscomplete = false
     }
-    else if (userData.fullName.length < 1) {
-        alert("ФИО слишком короткое");
-        return false;
+    else $("#inputName").removeClass('is-invalid')
+
+    if (userData.fullName.length < 1) {
+        $("#inputName").addClass('is-invalid')
+        checkIscomplete = false
     }
+    else $("#inputName").removeClass('is-invalid')
+
+    if (userData.password == "") {
+        $("#inputPassword").addClass('is-invalid')
+        checkIscomplete = false
+    }
+    else $("#inputPassword").removeClass('is-invalid')
+
+    if (userData.password.length < 6) {
+        $("#inputPassword").addClass('is-invalid')
+        checkIscomplete = false
+    }
+    else $("#inputPassword").removeClass('is-invalid')
+
+    if (userData.email == "") {
+        $("#inputEmail").addClass('is-invalid')
+        checkIscomplete = false
+    }
+    else $("#inputEmail").removeClass('is-invalid')
+
+    if (!userData.email.match(/^\S+@\S+\.\S+$/)) {
+        $("#inputEmail").addClass('is-invalid')
+        checkIscomplete = false
+    }
+    else $("#inputEmail").removeClass('is-invalid')
+
+     if (userData.birthDate == "T00:00:00.000Z" || Date.parse(userData.birthDate) > Date.now() || new Date(userData.birthDate).getFullYear() < 1900) {
+        console.log(userData.birthDate)
+
+        $("#inputBirthDate").addClass('is-invalid')
+        checkIscomplete = false
+    }
+    else  $("#inputBirthDate").removeClass('is-invalid')
+
+    if (userData.address == "") {
+        $("#address").addClass('is-invalid')
+        checkIscomplete = false
+    }
+    else $("#address").removeClass('is-invalid')
+
+    if (userData.phoneNumber == "") {
+        $("#telephone").addClass('is-invalid')
+        checkIscomplete = false
+    }
+    else $("#telephone").removeClass('is-invalid')
     
-    else if (userData.password == "") {
-        alert("Введите пароль");
-        return false;
-    }
-    else if (userData.password.length < 6) {
-        alert("Пароль слишком короткий");
-        return false;
-    }
-
-    else if (userData.email == "") {
-        alert("Введите адрес почты");
-        return false;
-    }
-    else if (!userData.email.match(/^\S+@\S+\.\S+$/)) {
-        alert("Email неккоректен");
-        return false;
-    }
-
-    else if (userData.birthDate == "T00:00:00.000Z") {
-        alert("Выберете дату рождения");
-        return false;
-    }
-    else if (Date.parse(userData.birthDate) > Date.now()) {
-        alert("Дата рождения неккоректна");
-        return false;
-    }
-
-    else if (userData.name == "") {
-        alert("Введите ФИО");
-        return false;
-    }
-    
-    return true;
+    return checkIscomplete;
 }
 
 $.fn.setCursorPosition = function(pos) {

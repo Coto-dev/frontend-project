@@ -6,16 +6,21 @@ import {Register} from "./register.js";
 import {SetupHighlightingActivePage} from "./navbar.js";
 import { searchParse } from './parseDish.js';
 import { loadCartDishes } from './cart.js';
+import { loadOrders } from './orders.js';
+import { LoadProfileInfo } from './profile.js';
+import { loadPurchase } from './purchase.js';
+import { loadOrderDetails } from './orderDetails.js';
 
 export var Router = {
 
     routes: {
         "/index.html": "dishesCatalog",
         "/": "dishesCatalog",
-        //  "/dish?=page/=categories": "dishesCatalog",
-         "/orders/": "",
+        "/profile/": "profile",
+         "/orders/": "orders",
          "/cart/": "cart",
-         "/order/=id": "",
+         "/order/=id": "orderDetails",
+         "/purchase/": "purchase",
          "/item/=id": "itemDetails",
         "/login/": "login",
         "/register/": "register"
@@ -66,21 +71,16 @@ export var Router = {
         SetupHighlightingActivePage("dishes");
         $.get('/src/views/view-dishes.html', function(data){
             $("main").html(data);
-            console.log(searchParams)
-            let params = new URLSearchParams();
-            let search
+            let params
             if (searchParams){
-             search = searchParse(searchParams)
-                if(search.categories.length === 0 )
-                throw new Error("Ошибка");
-             search.categories.forEach((category)=>{
-                params.append("categories",category)
-            })
-
-            params.append("vegetarian",search.vegetarian)
-            params.append("sorting",search.sorting)
-            params.append("page",search.page)
+            params = searchParams.toString()
+           params = params.replace('?','')
+           params = params.replace('/','')
+            console.log(params)
             }
+            
+            console.log(params)
+
             LoadCatalogDishes(params); 
         });
     },
@@ -90,6 +90,14 @@ export var Router = {
         $.get('/src/views/view-dish-details.html', function(data){
             $("main").html(data);
             loadDishCard(id);
+        });
+    },
+
+    orders: function () {
+        document.documentElement.scrollIntoView(true);
+        $.get('/src/views/view-orders.html', function(data){
+            $("main").html(data);
+            loadOrders()
         });
     },
 
@@ -126,4 +134,44 @@ export var Router = {
             Register();
         });
     },
+    purchase: function () {
+        document.documentElement.scrollIntoView(true);
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (user.auth == false) {
+            Router.dispatch("/login/");
+            return;
+        }
+        SetupHighlightingActivePage("order");
+        $.get('/src/views/view-purchase.html', function(data){
+            $("main").html(data);
+           loadPurchase()
+        });
+    },
+    orderDetails: function (id) {
+        document.documentElement.scrollIntoView(true);
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (user.auth == false) {
+            Router.dispatch("/login/");
+            return;
+        }
+        SetupHighlightingActivePage("order");
+        $.get('/src/views/view-order.html', function(data){
+            $("main").html(data);
+            loadOrderDetails(id)
+        });
+    },
+    
+    profile: function () {
+        document.documentElement.scrollIntoView(true);
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (user.auth == false) {
+            Router.dispatch("/login/");
+            return;
+        }
+        SetupHighlightingActivePage("profile");
+        $.get('/src/views/view-profile.html', function(data){
+            $("main").html(data);
+            LoadProfileInfo();
+        });
+    }
 }

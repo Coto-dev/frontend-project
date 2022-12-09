@@ -3,42 +3,63 @@
         <form autocomplete="off" class="card-body text-light"  id="form-register">
             <div>
                 <label for="" class="form-label">Email</label>
-                    <input type="email" class="form-control bg-dark text-light border-secondary" autocomplete="disabled" placeholder="name@example.com" id="inputEmail" name="email"
+                    <input type="email" class=" form-control bg-dark text-light border-secondary" autocomplete="disabled" placeholder="name@example.com" id="inputEmail" name="email"
                         aria-describedby="emailHelp">
+                        <div class="invalid-feedback">
+                            Укажите корректный email 
+                          </div>
             </div>
             <div class="row pt-2">
-                <div class="col-6">
+                <div class="col-12 col-sm-6">
                     <label for="" class="form-label">Пароль</label>
                     <input type="password" class="form-control bg-dark text-light border-secondary" autocomplete="disabled" id="inputPassword" name="password">
+                    <div class="invalid-feedback">
+                        Пароль должен включать не менее 6 символов  
+                      </div>
                 </div>
-                <div class="col-6">
+                <div class="col-12 col-sm-6">
                     <label for="" class="form-label">Адрес</label>
                     <input type="text" class="form-control bg-dark text-light border-secondary" id="address"
                         name="address">
+                        <div class="invalid-feedback">
+                            Укажите адрес
+                          </div>
                 </div>
             </div>
             <div class="row pt-2">
-                <div class="col-6">
+                <div class="col-12 col-sm-6">
                     <label for="" class="form-label">Телефон</label>
                     <input type="text" class="form-control bg-dark text-light border-secondary" placeholder="+7 (xxx) xxx-xx-xx" id="telephone" name="telephone"
                     aria-describedby="telephoneHelp">
+                    <div class="invalid-feedback">
+                        Укажите номер телефона
+                      </div>
                 </div>
-                <div class="col-6">
+                <div class="col-12 col-sm-6">
                     <label for="" class="form-label">ФИО</label>
                     <input type="text" class="form-control bg-dark text-light border-secondary" id="inputName" name="name">
+                    <div class="invalid-feedback">
+                        Пожалуйста, введите имя пользователя.
+                      </div>
                 </div>
             </div>
             <div class="row pt-2">
-                <div class="col-6">
+                <div class="col-12 col-sm-6">
                     <label for="" class="form-label">Дата рождения</label>
                     <input type="date" class="form-control bg-dark text-light border-secondary" id="inputBirthDate" name="birthDate">
+                    <div class="invalid-feedback">
+                        Укажите корректную дату рождения 
+                      </div>
                 </div>
-                <div class="col-6">
+                <div class="col-12 col-sm-6">
                     <label for="" class="form-label">Пол</label>
                     <select class="form-select bg-dark text-light border-secondary" id="inputGender" name="gender">
                         <option value="1">Мужчина</option>
                         <option value="0">Женщина</option>
                     </select>
+                    <div class="invalid-feedback">
+                        Укажите пол
+                      </div>
                 </div>
             </div>
             <div class="btn btn-outline-primary mt-3" type="button" id="btn-register">Зарегистироваться</div>
