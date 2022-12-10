@@ -1,6 +1,5 @@
 import { api } from "../api.js";
 import { decreaseAmount, increaseAmount } from "./cart.js";
-import { searchParse } from "./parseDish.js";
 import { Router } from "./router.js";
 
 

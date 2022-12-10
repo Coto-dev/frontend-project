@@ -15,9 +15,9 @@
             </div>
         <h2 class="card-title fs-3 mt-2 mx-2 ">Данные доставки</h2>
         <div class="row">
-            <div class="col-12 col-lg pt-2">
-                <label for="" class="form-label">Адрес</label>
-                <input type="text" value="" class="form-control bg-dark text-light border-secondary" id="address" required >
+            <div class="col-12 col-lg pt-2 text-secondary">
+                <label for="" class="form-label text-white">Адрес</label>
+                <input type="text" value="" class="form-control bg-dark text-white border-secondary" id="address" required >
             </div>
             <div class="col-12 col-lg pt-2">
                 <label for="" class="form-label">Время доставки</label>
@@ -27,6 +27,7 @@
                   </div>
               </div>
             </div>
+            <div id="map" class="d-none" style="width: 600px; height: 400px"></div>
         </form>
     <div class="card-body" id ="orders-container">
         <p class="fs-5">Список блюд:</p>

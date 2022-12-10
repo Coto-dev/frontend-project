@@ -75,3 +75,6 @@ body {
     .w-md-15 { width: 15%!important; }
     .w-md-50 { width: 50%!important; }
 }
+.ymaps-2-1-79-search__suggest{
+    background-color: #41464b;
+}

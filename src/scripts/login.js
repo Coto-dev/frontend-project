@@ -9,22 +9,32 @@ export function Login() {
         const login = $("#inputLogin").val(),
             password = $("#inputPassword").val();
 
-        if (login == "") {
-            alert("Введите логин");
-            return;
-        }
-        else if (password == "") {
-            alert("Введите пароль");
-            return;
-        }
-
+           
+        if (checkData(login,password)){
         const userData = {
             email: login,
             password: password,
         };
 
         PostRequestLogin(userData);
+    }
     });
+}
+function checkData(login,password){
+    let checkFlag = true
+    if (login.length <= 1) {
+        $("#inputLogin").addClass('is-invalid')
+        checkFlag = false
+    }
+    else $("#inputLogin").removeClass('is-invalid')
+
+    if (password.length <= 1) {
+        $("#inputPassword").addClass('is-invalid')
+        checkFlag = false
+    }
+    else $("#inputPassword").removeClass('is-invalid')
+    
+    return checkFlag
 }
 
 async function PostRequestLogin(userData) {
@@ -40,13 +50,13 @@ async function PostRequestLogin(userData) {
             if (response.ok) {
                 return response.json();
             }
-            throw new Error("Ошибка");
+            $("#error").removeClass("d-none")
         })
         .then(json => {
             localStorage.setItem("JWT", json.token);
             location.pathname = "/";
         })
         .catch(err => {
-            alert(err);
+            $("#error").removeClass("d-none")
         });
 }

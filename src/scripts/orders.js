@@ -39,7 +39,7 @@ export function createOrder(order){
         $("#orders-container").append($("#error").removeClass("d-none"))
         return
     }
-    console.log(order)
+    console.log(new Date(order.orderTime))
     let template = $("#orderCard");
     let block = template.clone();
     block.find("#link").text("Заказ от "+ new Date(order.orderTime).toLocaleDateString());

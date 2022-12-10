@@ -1,8 +1,10 @@
 import { api } from "../api.js";
 import { Router } from "./router.js";
+import { bangeCount } from "./navbar.js";
 
 export async function loadPurchase(){
     getUserData()   
+    initMap()
     $("#confirm").on('click', function(){
         confirmOrder()
     })
@@ -69,7 +71,7 @@ function confirmOrder(){
          $("#address").removeClass('is-valid')
     }
     if(((new Date($("#deliveryTime").val()) - (new Date(Date.now())) )/1000/60)>=60){
-        data.deliveryTime = new Date($("#deliveryTime").val())
+        data.deliveryTime = ($("#deliveryTime").val())
         $("#deliveryTime").addClass('is-valid') 
          $("#deliveryTime").removeClass('is-invalid')
         }
@@ -91,12 +93,33 @@ async function postOrder(data){
         },
         body: JSON.stringify(data)
     })
-        .then(response => {
+        .then(async response => {
             if (response.ok) {
+                await bangeCount()
                 Router.dispatch("/orders/")
+                
+            }
+            else{
+           const user = JSON.parse(localStorage.getItem("user"));
+           if (user.auth == false){
+           Router.dispatch(`/login/`);
+           return;
+            }
             }
         })
         .catch(err => {
-            alert("Ошибка");
+            alert("Ошибка"+err);
         });
+}
+
+function initMap(){
+    ymaps.ready(init);
+    
+        function init(){
+            var suggestViewFrom = new ymaps.SuggestView('address');
+            // var myMap = new ymaps.Map("map", {
+            //     center: [55.76, 37.64],
+            //     zoom: 7
+            // });
+        }
 }

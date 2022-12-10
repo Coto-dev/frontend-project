@@ -66,24 +66,40 @@ function PutRequestProfile(userData) {
 
 function CheckValidationData(userData) {
     
+    let checkIscomplete = true
 
-    if (userData.birthDate == "T00:00:00.000Z") {
-        alert("Выберете дату рождения");
-        return false;
+    if (userData.fullName == "") {
+        $("#inputName").addClass('is-invalid')
+        checkIscomplete = false
     }
-    else if (userData.phoneNumber.length < 10) {
-        alert("Неккоректный номер телефона");
-        return false;
-    }
-    else if (Date.parse(userData.birthDate) > Date.now()) {
-        alert("Дата рождения неккоректна");
-        return false;
-    }
+    else $("#inputName").removeClass('is-invalid')
 
-    else if (userData.name == "") {
-        alert("Введите ФИО");
-        return false;
+    if (userData.fullName.length < 1) {
+        $("#inputName").addClass('is-invalid')
+        checkIscomplete = false
     }
+    else $("#inputName").removeClass('is-invalid')
 
-    return true;
+
+     if (userData.birthDate == "T00:00:00.000Z" || Date.parse(userData.birthDate) > Date.now() || new Date(userData.birthDate).getFullYear() < 1900) {
+        console.log(userData.birthDate)
+
+        $("#inputBirthdate").addClass('is-invalid')
+        checkIscomplete = false
+    }
+    else  $("#inputBirthdate").removeClass('is-invalid')
+
+    if (userData.address == "") {
+        $("#address").addClass('is-invalid')
+        checkIscomplete = false
+    }
+    else $("#address").removeClass('is-invalid')
+
+    if (userData.phoneNumber == "") {
+        $("#telephone").addClass('is-invalid')
+        checkIscomplete = false
+    }
+    else $("#telephone").removeClass('is-invalid')
+    return checkIscomplete
+    
 }
