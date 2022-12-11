@@ -78,3 +78,18 @@ body {
 .ymaps-2-1-79-search__suggest{
     background-color: #41464b;
 }
+/* @media (min-width: 576px){
+.cont {
+    max-width: 50%;
+}
+} */
+/* .jor {
+    background-color: #3a4147;
+
+} */
+/* textarea:focus, input:focus{
+    outline: none;
+}
+*:focus {
+    outline: none;
+} */

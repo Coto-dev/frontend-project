@@ -51,9 +51,11 @@ function createDetails(json){
     $("#deliveryTime").text("Дата доставки: " + new Date(json.deliveryTime).toLocaleString().slice(0,-3))
     if (json.status == "Delivered"){
         $("#status").text("Статус: Доставлен")
+        console.log("Wd")
         }
         else{
-             $("#confirm").parent().removeClass('d-none')
+            
+             $("#confirm").removeClass('d-none')
              $("#confirm").on('click', function(){
                 confirmOrder(json.id);
             })

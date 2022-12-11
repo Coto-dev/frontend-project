@@ -114,12 +114,55 @@ async function postOrder(data){
 
 function initMap(){
     ymaps.ready(init);
+    $("#map").removeClass('d-none')
     
         function init(){
+            var myMap = new ymaps.Map("map", {
+                center: [55.76, 37.64],
+                zoom: 14
+            });
+
             var suggestViewFrom = new ymaps.SuggestView('address');
-            // var myMap = new ymaps.Map("map", {
-            //     center: [55.76, 37.64],
-            //     zoom: 7
-            // });
+            suggestViewFrom.events.add('select', function (e) {
+                geoceder(e.get('item').value,myMap)
+            });
+               myMap.events.add('click', function (e) {
+               var cords = e.get('coords')
+               geoceder(cords,myMap)
+               
+
+                ymaps.geocode(cords).then(function (res) {
+                var firstGeoObject = res.geoObjects.get(0);
+                $("#address").val(firstGeoObject.getAddressLine())
+            })
+            });
+            myMap.events.add('sizechange', function (e) {
+                console.log(myMap.container.getSize())
+                // myMap.container.getElement().style.width = myMap.container.getSize()[0];
+                // console.log( myMap.container.getElement().style.width)
+                myMap.container.fitToViewport()
+            })
+            
         }
+}
+function geoceder(address,myMap){
+    var geocoder = ymaps.geocode(address);
+    console.log(geocoder)
+    geocoder.then(
+        function (res) {
+ 
+            var coordinates = res.geoObjects.get(0).geometry.getCoordinates();
+ 
+            var placemark = new ymaps.Placemark(
+                coordinates, {
+                    'hintContent': address,
+                }, {
+                    'preset': 'islands#redDotIcon'
+                }
+            );
+            myMap.geoObjects.removeAll()
+            myMap.setCenter(coordinates)
+            myMap.geoObjects.add(placemark);
+        }
+    );
 }
