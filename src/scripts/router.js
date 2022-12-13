@@ -95,6 +95,7 @@ export var Router = {
 
     orders: function () {
         document.documentElement.scrollIntoView(true);
+        SetupHighlightingActivePage("order");
         $.get('/src/views/view-orders.html', function(data){
             $("main").html(data);
             loadOrders()
@@ -103,6 +104,7 @@ export var Router = {
 
     cart: function () {
         document.documentElement.scrollIntoView(true);
+        SetupHighlightingActivePage("basket");
         $.get('/src/views/view-cart.html', function(data){
             $("main").html(data);
           loadCartDishes()

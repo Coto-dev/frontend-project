@@ -70,7 +70,7 @@ function confirmOrder(){
         $("#address").addClass('is-invalid')
          $("#address").removeClass('is-valid')
     }
-    if(((new Date($("#deliveryTime").val()) - (new Date(Date.now())) )/1000/60)>=60){
+    if(((new Date($("#deliveryTime").val()) - (new Date(Date.now())))/1000/60)>60 && ((new Date($("#deliveryTime").val()) - (new Date(Date.now())))/1000/60)<44640){
         data.deliveryTime = ($("#deliveryTime").val())
         $("#deliveryTime").addClass('is-valid') 
          $("#deliveryTime").removeClass('is-invalid')
@@ -80,7 +80,7 @@ function confirmOrder(){
         $("#deliveryTime").addClass('is-invalid') 
         $("#deliveryTime").removeClass('is-valid')
      }
-     console.log(data)
+     
      if (data.address && data.deliveryTime) postOrder(data)
 }
 async function postOrder(data){
@@ -137,7 +137,6 @@ function initMap(){
             })
             });
             myMap.events.add('sizechange', function (e) {
-                console.log(myMap.container.getSize())
                 // myMap.container.getElement().style.width = myMap.container.getSize()[0];
                 // console.log( myMap.container.getElement().style.width)
                 myMap.container.fitToViewport()
