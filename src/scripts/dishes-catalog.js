@@ -101,12 +101,13 @@ function initSelections(url){
 function confirmSearch(url){
     let params = new URLSearchParams()
    let selectDish = $('#dishSelect').val()
-   console.log(selectDish)
+   
    if(selectDish.length === 0){
-    alert("Выберите категория блюда")
-    return
-    Router.dispatch(history.back());
+   // alert("Выберите категория блюда")
+    //return
+    
    }
+   else
    selectDish.forEach((category)=>{
     params.append("categories",category)
 })
@@ -155,8 +156,7 @@ function confirmSearch(url){
 }
 function InitDishsNavigation(json) {
     var search = new URLSearchParams(window.location.search)
-    console.log(search.toString())
-    console.log(json.pagination)
+    
     for (let i=1;i<=json.pagination.count;i++){
         if (i==json.pagination.current) {
          $("#"+i.toString()).parent().addClass("active")
@@ -164,7 +164,7 @@ function InitDishsNavigation(json) {
         search.set('page', i.toString())
         $("#"+i.toString()).attr("href", "/?" + search)
          $("#"+i.toString()).parent().removeClass("d-none")
-        console.log("#"+i);
+        
     }
         $("#page-item-next").parent().removeClass('d-none')
         $("#page-item-back").parent().removeClass('d-none')

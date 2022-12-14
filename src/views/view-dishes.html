@@ -1,9 +1,10 @@
 <div class="container border rounded border-secondary mb-3" id ="forSelect">
     <!-- container select -->
 </div>
-        <div class=" d-none container row row-cols-sm-2 row-cols-md-2  row-cols-lg-4 row-cols-xl-4  mt-3 mb-3 " id="selecter">
-            <div class="col col-lg-4 col-md-6 my-1 align-self-center">
-            <select id="dishSelect" class="selectpicker" multiple >
+<!-- row-cols-sm-2 row-cols-md-2  row-cols-lg-4 row-cols-xl-4 -->
+        <div class=" d-none container row   mt-3 mb-3 " id="selecter">
+            <div class="col-12 col-sm col-xl-3 col-lg-4 col-md-6 my-1 align-self-center">
+            <select id="dishSelect" class="selectpicker w-100" multiple >
             <option selected value="Wok">Wok</option>
             <option value="Pizza">Pizza</option>
             <option value="Soup">Soup</option>
@@ -11,8 +12,8 @@
             <option value="Drink">Drink</option>
           </select>
           </div>
-          <div class="col col-lg-4 col-md-6 my-1 align-self-center">
-          <select id="sortingSelect" class="selectpicker"  aria-label=" select example" >
+          <div class="col-12 col-sm col-xl-3 col-lg-4 col-md-6 my-1 align-self-center">
+          <select id="sortingSelect" class="selectpicker w-100 "  aria-label=" select example" >
             <option value="NameAsc">По названию</option>
             <option value="NameDesc">По названию с конца</option>
             <option value="PriceAsc">По возрастанию цены</option>
@@ -21,12 +22,12 @@
             <option value="RatingDesc">По убыванию рейтинга</option>
           </select>
           </div>
-          <div class="col col-lg-4 my-1 col-md-6 form-check form-switch align-self-center ">
+          <div class="col-12 col-sm-6 col-xl-3 col-lg-4 my-1 col-md-6 ms-2 ms-sm-3 ms-lg-0  form-check form-switch align-self-center ">
             <input class="form-check-input align-self-center" type="checkbox" id="flexSwitchCheckDefault">
             <label class="form-check-label text-white" for="flexSwitchCheckDefault">Показать только вегетарианские</label>
           </div>
-          <div class="col col-lg-7 col-md-6 p-3 align-self-center d-lg-flex flex-row-reverse bd-highlight">
-            <button type="button" class="btn btn-primary p-2 bd-highlight" id ="confirmBtn">Подтвердить</button>
+          <div class=" col-12 col-sm-5 col-xl-3 col-lg-7 col-md-4 ms-0 ms-sm-2 ms-lg-0 p-2 align-self-center d-lg-flex flex-row-reverse bd-highlight">
+            <button type="button" class="btn btn-primary p-2 bd-highlight" id ="confirmBtn">Применить</button>
           </div>
         </div>
 
@@ -51,11 +52,11 @@
           <small class="text-white dish-price"></small>
          </div>  
           <div class="col d-flex flex-row-reverse bd-highlight" id="confirm">
-            <button type="button" class="btn btn-primary" id ="confirmBtn">Купить</button>
+            <button type="button" class="btn btn-primary " id ="confirmBtn">Купить</button>
           </div>
           <div class="btn-group col h-25 d-none" role="group" aria-label="First group" id="groupbtn">
             <button type="button" class="col-4 btn btn-outline-secondary" id="minus">-</button>
-            <input type="number" class="col-4"  id="counter" maxlength="2" min="1" readonly>
+            <input type="number" class="col-4 text-center"  id="counter" maxlength="2" min="1" readonly>
             <button type="button" class="col-4 btn btn-outline-secondary" id="plus">+</button>
           </div>
           </div>
@@ -89,5 +90,5 @@
     </nav>
 
     <div class="container alert alert-dark d-none text-center" role="alert" id="error">
-      <h4 class="alert-heading">Скоро будет в наличии</h4>
+      <h4 class="alert-heading">Ничего не найдено</h4>
       </div>
