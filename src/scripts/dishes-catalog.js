@@ -8,7 +8,7 @@ export async function LoadCatalogDishes(URLSearchParametrs) {
     let params = URLSearchParametrs
     
      url.search = URLSearchParametrs;
-    console.log(url)
+    
     initSelections(url)
     fetch(url)
         .then(response => {
@@ -16,6 +16,9 @@ export async function LoadCatalogDishes(URLSearchParametrs) {
                 return response.json();
             }
             else{
+                const user = JSON.parse(localStorage.getItem("user"));
+                if (user.auth == false)
+                Router.dispatch(`/login/`)
                $("#error").removeClass("d-none")
                return
             }
@@ -63,9 +66,9 @@ async function initFooterBtn(){
             $("#footerid-"+dishCart.id).find("#groupbtn").removeClass('d-none')
             $("#footerid-"+dishCart.id).find("#"+dishCart.id).val(dishCart.amount)
             $("#footerid-"+dishCart.id).find("#minus").on('click', async function(){
-                console.log(($("#"+dishCart.id)).val())
+                
               await decreaseAmount(dishCart.id,true)
-              console.log(($("#"+dishCart.id)).val())
+              
             })
             $("#footerid-"+dishCart.id).find("#plus").on('click',async function(){
                await increaseAmount(dishCart.id)
@@ -74,7 +77,8 @@ async function initFooterBtn(){
             });          
         })
         .catch(err => {
-           alert('page not found'+err) 
+            $("#error").removeClass("d-none")
+            return
 
              });
              
@@ -84,9 +88,7 @@ function initSelections(url){
     let template = $("#selecter");
     let block = template.clone();
     block.find('.selectpicker').selectpicker();
-    console.log(url.searchParams.getAll('categories'))
     let categories = url.searchParams.getAll('categories')
-    console.log(categories)
     let sorting = url.searchParams.get('sorting')
     let vegan = (url.searchParams.get('vegetarian') === 'true')
     if (categories) block.find('#dishSelect').selectpicker('val',categories)
@@ -119,12 +121,7 @@ function confirmSearch(url){
     
   url.search = params
   let path = url.search
-//   console.log(path)
-//   console.log(url)
-//   console.log(window.location.pathname + window.location.search)
   Router.dispatch(path)
-
-
 }
 
 
